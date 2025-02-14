@@ -12,6 +12,11 @@ public class BaseModel
         this.controller = controller;
     }
 
+    public BaseModel()
+    {
+
+    }
+
     public virtual void Init()
     {
 

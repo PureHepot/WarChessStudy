@@ -77,7 +77,7 @@ public class BaseView : MonoBehaviour, IBaseView
         return _canvas.enabled == true;
     }
 
-    public void Open(params object[] args)
+    public virtual void Open(params object[] args)
     {
         
     }

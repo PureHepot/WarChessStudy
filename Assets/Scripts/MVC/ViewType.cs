@@ -8,5 +8,8 @@ using UnityEngine;
 public enum ViewType
 {
     StartView,
-    SetView
+    SetView,
+    MessageView,
+    LoadingView,
+    SelectLevelView
 }

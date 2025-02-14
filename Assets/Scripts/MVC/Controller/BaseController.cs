@@ -75,7 +75,7 @@ public class BaseController
     {
         GameApp.ControllerManager.ApplyFunc(controllerKey, eventName, args);
     }
-    public void ApplyControllerFunc(ControllerType controllerKey, string eventName, params string[] args)
+    public void ApplyControllerFunc(ControllerType controllerKey, string eventName, params object[] args)
     {
         ApplyControllerFunc((int)controllerKey, eventName, args);
     }
@@ -83,6 +83,7 @@ public class BaseController
     public void SetModel(BaseModel model)
     {
         this.model = model;
+        this.model.controller = this;
     }
 
     public BaseModel GetModel()

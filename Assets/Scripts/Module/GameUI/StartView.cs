@@ -20,7 +20,15 @@ public class StartView : BaseView
 
     private void onStartGameBtn()
     {
+        GameApp.ViewManager.Close(ViewId);
 
+        LoadingModel loadingModel = new LoadingModel();
+        loadingModel.SceneName = "map";
+        loadingModel.callback = () =>
+        {
+            Controller.ApplyControllerFunc(ControllerType.Level, Defines.OpenSelectLevelView);
+        };
+        Controller.ApplyControllerFunc(ControllerType.Loading, Defines.LoadingScene, loadingModel);
     }
 
     private void onSetBtn()
@@ -30,6 +38,13 @@ public class StartView : BaseView
 
     private void onQuitGameBtn()
     {
-
+        Controller.ApplyControllerFunc(ControllerType.GameUI, Defines.OpenMessageView, new MessageInfo()
+        {
+            MsgTxt = "确定退出游戏吗?",
+            okCallback = () =>
+            {
+                Application.Quit();
+            }
+        });
     }
 }

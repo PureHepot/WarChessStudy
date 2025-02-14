@@ -26,6 +26,13 @@ public class GameUIController : BaseController
             Sorting_Order = 1,
             parentTf = GameApp.ViewManager.canvasTf
         });
+        GameApp.ViewManager.Register(ViewType.MessageView, new ViewInfo()
+        {
+            PrefabName = "MessageView",
+            controller = this,
+            Sorting_Order = 999,
+            parentTf = GameApp.ViewManager.canvasTf
+        });
 
         InitModuleEvent();//初始化模板事件
         InitGlobalEvent();//初始化全局事件
@@ -35,6 +42,7 @@ public class GameUIController : BaseController
     {
         RegisterFunc(Defines.OpenStartView, openStartView);
         RegisterFunc(Defines.OpenSetView, openSetView);
+        RegisterFunc(Defines.OpenMessageView, openMessageView);
     }
 
     public override void InitGlobalEvent()
@@ -52,5 +60,10 @@ public class GameUIController : BaseController
     private void openSetView(object[] args)
     {
         GameApp.ViewManager.Open(ViewType.SetView, args);   
+    }
+
+    private void openMessageView(object[] args)
+    {
+        GameApp.ViewManager.Open(ViewType.MessageView, args);
     }
 }

@@ -124,6 +124,10 @@ public class ViewManager
     }
 
     //关闭面板视图
+    public void Close(ViewType viewType, params object[] args)
+    {
+        Close((int)viewType, args); 
+    }
     public void Close(int key, params object[] args)
     {
         //如果没有打开
