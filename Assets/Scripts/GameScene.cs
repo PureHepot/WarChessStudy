@@ -32,7 +32,7 @@ public class GameScene : MonoBehaviour
 
         GameApp.ConfigManager.LoadAllConfigs();
 
-        Debug.Log(GameApp.ConfigManager.GetConfigData("enemy").GetDataById(10001)["Name"]);
+        //Debug.Log(GameApp.ConfigManager.GetConfigData("enemy").GetDataById(10001)["Name"]);
 
         GameApp.SoundManager.PlayBGM("login");
 

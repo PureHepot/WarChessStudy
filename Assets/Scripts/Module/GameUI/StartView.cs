@@ -22,13 +22,9 @@ public class StartView : BaseView
     {
         GameApp.ViewManager.Close(ViewId);
 
-        LoadingModel loadingModel = new LoadingModel();
-        loadingModel.SceneName = "map";
-        loadingModel.callback = () =>
-        {
-            Controller.ApplyControllerFunc(ControllerType.Level, Defines.OpenSelectLevelView);
-        };
-        Controller.ApplyControllerFunc(ControllerType.Loading, Defines.LoadingScene, loadingModel);
+        new LoadSomeScene(this.Controller, "map", () => 
+        { Controller.ApplyControllerFunc(ControllerType.Level, Defines.OpenSelectLevelView); });
+        
     }
 
     private void onSetBtn()

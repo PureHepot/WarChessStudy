@@ -80,8 +80,8 @@ public class BaseController
         ApplyControllerFunc((int)controllerKey, eventName, args);
     }
 
-    public void SetModel(BaseModel model)
-    {
+    public void SetModel(BaseModel model)//一个控制器对应一个数据模块，整个MVC流程就是初始化控制器Module，然后同时完成各种事件、数据的注册、加载
+    {                                    //编写好控制器后，在各个视图中调用即可，而实现全局控制的是GameApp中的各种manager，为整个框架的控制中枢
         this.model = model;
         this.model.controller = this;
     }
