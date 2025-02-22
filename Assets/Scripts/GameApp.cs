@@ -13,6 +13,11 @@ public class GameApp : Singleton<GameApp>
     public static ConfigManager ConfigManager;
     public static CameraManager CameraManager;
     public static MessageCenter MessageCenter;
+    public static TimerManager TimerManager;
+    public static FightWorldManager FightWorldManager;
+    public static MapManager MapManager;
+    public static GameDataManager GameDataManager;
+    public static UserInputManager UserInputManager;
     public override void Init()
     {
         SoundManager = new SoundManager();
@@ -21,5 +26,18 @@ public class GameApp : Singleton<GameApp>
         ConfigManager = new ConfigManager();
         CameraManager = new CameraManager();
         MessageCenter = new MessageCenter();
+        TimerManager = new TimerManager();
+        FightWorldManager = new FightWorldManager();
+        MapManager = new MapManager();
+        GameDataManager = new GameDataManager();
+        UserInputManager = new UserInputManager();
+    }
+
+    public override void Update(float dt)
+    {
+        UserInputManager.Update();
+        TimerManager.OnUpdate(dt);
+        FightWorldManager.Update(dt);
+        
     }
 }

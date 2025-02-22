@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class MessageCenter
 {
-    private Dictionary<string, System.Action<object>> msgDic;
+    private Dictionary<string, System.Action<object>> msgDic; //消息字典
     private Dictionary<string, System.Action<object>> tempMsgDic;//存储临时的消息字典，施行后消除
     private Dictionary<object, Dictionary<string, System.Action<object>>> objMsgDic;//存储特定对象的消息字典
 

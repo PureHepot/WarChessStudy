@@ -11,5 +11,9 @@ public enum ViewType
     SetView,
     MessageView,
     LoadingView,
-    SelectLevelView
+    SelectLevelView,
+    FightView,
+    FightSelectHeroView,
+    DragHeroView,
+    TipView
 }

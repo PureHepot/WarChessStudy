@@ -7,14 +7,13 @@ using UnityEngine.SceneManagement;
 public static class LoadSomeScene
 {
 
-
-    //public void LoadtheScene(string SceneName, System.Action action)
-    //{
-    //    LoadingModel loadingModel = new LoadingModel();
-    //    loadingModel.SceneName = SceneName;
-    //    loadingModel.callback = action;
-    //    controller.ApplyControllerFunc(ControllerType.Loading, Defines.LoadingScene, loadingModel);
-    //}
+    public static void LoadtheScene(BaseController controller ,string sceneName, System.Action action)
+    {
+        LoadingModel loadingmodel = new LoadingModel();
+        loadingmodel.SceneName = sceneName;
+        loadingmodel.callback = action;
+        controller.ApplyControllerFunc(ControllerType.Loading, Defines.LoadingScene, loadingmodel);
+    }
 }
 
 
@@ -61,8 +60,13 @@ public class LoadingController : BaseController
     {
         asyncOperation.completed -= onLoadEndCallback;
 
-        GetModel<LoadingModel>().callback?.Invoke();
+        GameApp.TimerManager.Register(0.25f, () =>
+        {
+            GetModel<LoadingModel>().callback?.Invoke();
 
-        GameApp.ViewManager.Close(ViewType.LoadingView);
+            GameApp.ViewManager.Close(ViewType.LoadingView);
+        });
+
+        
     }
 }

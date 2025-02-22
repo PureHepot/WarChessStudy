@@ -22,8 +22,10 @@ public class StartView : BaseView
     {
         GameApp.ViewManager.Close(ViewId);
 
-        new LoadSomeScene(this.Controller, "map", () => 
-        { Controller.ApplyControllerFunc(ControllerType.Level, Defines.OpenSelectLevelView); });
+        LoadSomeScene.LoadtheScene(this.Controller, "map", () =>
+        {
+            Controller.ApplyControllerFunc(ControllerType.Level, Defines.OpenSelectLevelView);
+        });
         
     }
 

@@ -23,18 +23,11 @@ public class SelectLevelView : BaseView
     {
         GameApp.ViewManager.Close(ViewId);
 
-        new LoadSomeScene(this.Controller, "game", () =>
+        LoadSomeScene.LoadtheScene(this.Controller, "game", () =>
         {
             Controller.ApplyControllerFunc(ControllerType.GameUI, Defines.OpenStartView);
         });
 
-        LoadingModel loadingModel = new LoadingModel();
-        loadingModel.SceneName = "game";
-        loadingModel.callback = () =>
-        {
-            Controller.ApplyControllerFunc(ControllerType.GameUI, Defines.OpenStartView);
-        };
-        Controller.ApplyControllerFunc(ControllerType.Loading, Defines.LoadingScene, loadingModel);
     }
 
     public void ShowLevel()
@@ -53,6 +46,13 @@ public class SelectLevelView : BaseView
     //进入战斗
     private void onFightBtn()
     {
-
+        //关闭当前界面
+        GameApp.ViewManager.Close(this.ViewId);
+        //充值摄像机
+        GameApp.CameraManager.ResetPos();
+        LoadSomeScene.LoadtheScene(this.Controller, Controller.GetModel<LevelModel>().current.SceneName, () =>
+        {
+            Controller.ApplyControllerFunc(ControllerType.Fight, Defines.BeginFight);
+        });
     }
 }
