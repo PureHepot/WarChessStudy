@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum BlockType
@@ -62,5 +63,12 @@ public class Block : MonoBehaviour
     private void Start()
     {
         
+    }
+
+    //设置箭头方向的图片资源 和 颜色
+    public void SetDirSp(Sprite sp, Color color)
+    {
+        dirSp.sprite = sp;
+        dirSp.color = color;
     }
 }

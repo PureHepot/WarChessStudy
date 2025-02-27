@@ -19,4 +19,31 @@ public class Hero : ModelBase
         MaxHp = int.Parse(this.data["Hp"]);
         CurHp = MaxHp;
     }
+
+    protected override void OnSelectCallBack(object arg)
+    {
+        if (GameApp.FightWorldManager.state == GameState.Player)
+        {
+            if (isStop)
+            {
+                return;
+            }
+            if (GameApp.CommandManager.isRunningCommand == true)
+            {
+                return;
+            }
+
+            //添加显示路径指令
+            GameApp.CommandManager.AddCommand(new ShowPathCommand(this));
+
+            base.OnSelectCallBack(arg);
+            GameApp.ViewManager.Open(ViewType.HeroDesView, this);
+        }
+    }
+
+    protected override void OnUnSelectCallBack(object arg)
+    {
+        base.OnUnSelectCallBack(arg);
+        GameApp.ViewManager.Close(ViewType.HeroDesView, this);
+    }
 }

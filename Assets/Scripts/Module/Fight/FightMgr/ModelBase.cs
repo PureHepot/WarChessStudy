@@ -18,6 +18,30 @@ public class ModelBase : MonoBehaviour
     public GameObject stopObj;//停止动作的标记物体
     public Animator animator;//动画组件
 
+    private bool _isStop;//是否移动完标记
+
+    public bool isStop
+    {
+        get
+        {
+            return _isStop;
+        }
+        set
+        {
+            stopObj.SetActive(value);
+
+            if (value == true)
+            {
+                bodySp.color = Color.gray;
+            }
+            else
+            {
+                bodySp.color= Color.white;
+            }
+            _isStop = value;
+        }
+    }
+
     private void Awake()
     {
         bodySp = transform.Find("body").GetComponent<SpriteRenderer>();
@@ -57,7 +81,7 @@ public class ModelBase : MonoBehaviour
         GameApp.MapManager.ShowStepGrid(this, Step);
     }
     //未选中的回调
-    protected void OnUnSelectCallBack(object arg)
+    protected virtual void OnUnSelectCallBack(object arg)
     {
         GameApp.MapManager.HideStepGrid(this, Step);
     }

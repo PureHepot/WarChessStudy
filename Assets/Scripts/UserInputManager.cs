@@ -27,7 +27,7 @@ public class UserInputManager
                     }
                     else
                     {
-                        GameApp.MessageCenter.PostEvent(col.gameObject, Defines.OnSelectEvent);
+                        GameApp.MessageCenter.PostEvent(Defines.OnSelectEvent);
                     }
                 });
             }
