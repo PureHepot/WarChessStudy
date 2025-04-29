@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //战斗中的状态枚举
@@ -7,7 +8,9 @@ public enum GameState
 {
     Idel,
     Enter,
-    Player
+    Player,
+    Enemy,
+    GameOver
 }
 
 
@@ -68,6 +71,12 @@ public class FightWorldManager
             case GameState.Player:
                 _current = new FightPlayerUnit();
                 break;
+            case GameState.Enemy:
+                _current = new FIghtEnemyUnit();
+                break;
+            case GameState.GameOver:
+                _current = new FightGameOverUnit();
+                break;
         }
         _current.Init();
     }
@@ -98,5 +107,80 @@ public class FightWorldManager
         //这个位置被占领了 设置方块的类型为障碍物
         b.Type = BlockType.Obstacle;
         heroes.Add(hero);
+    }
+
+    //移除
+    public void RemoveEnemy(Enemy enemy)
+    {
+        enemys.Remove(enemy);
+
+        GameApp.MapManager.ChangeBlockType(enemy.RowIndex, enemy.ColIndex, BlockType.Null);
+
+        if (enemys.Count == 0)
+        {
+            ChangeState(GameState.GameOver);
+        }
+    }
+
+    public void RemoveHero(Hero hero)
+    {
+        heroes.Remove(hero);
+
+        GameApp.MapManager.ChangeBlockType(hero.RowIndex, hero.ColIndex, BlockType.Null);
+
+        if (heroes.Count == 0)
+        {
+            ChangeState(GameState.GameOver);
+        }
+    }
+
+    //重置英雄行动
+    public void ResetHeroes()
+    {
+        for (int i = 0; i < heroes.Count; i++)
+        {
+            heroes[i].isStop = false;
+        }
+    }
+
+    public void ResetEnemys()
+    {
+        for (int i = 0; i < enemys.Count; i++)
+        {
+            enemys[i].isStop = false;
+
+        }
+    }
+
+    /// <summary>
+    /// 获取最近位置的英雄
+    /// </summary>
+    /// <param name="model">目标</param>
+    /// <returns></returns>
+    public ModelBase GetMinDisHero(ModelBase model)
+    {
+        if (heroes.Count == 0)
+        {
+            return null;
+        }
+        Hero hero = heroes[0];
+        float min_dis = hero.GetDis(model);
+        for(int i = 1;i<heroes.Count;i++)
+        {
+            float dis = heroes[i].GetDis(model);
+            if (dis < min_dis)
+            {
+                min_dis = dis;
+                hero = heroes[i];
+            }
+        }
+        return hero;
+    }
+
+    public void ReLoadRes()
+    {
+        heroes.Clear();
+        enemys.Clear();
+        GameApp.MapManager.Clear();
     }
 }

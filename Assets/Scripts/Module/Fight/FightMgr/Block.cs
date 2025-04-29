@@ -28,11 +28,13 @@ public class Block : MonoBehaviour
         dirSp = transform.Find("dir").GetComponent<SpriteRenderer>();
 
         GameApp.MessageCenter.AddEvent(gameObject, Defines.OnSelectEvent, OnSelectCallback);
+        GameApp.MessageCenter.AddEvent(Defines.OnUnSelectEvent, OnUnSelectCallback);
     }
 
     private void OnDestroy()
     {
         GameApp.MessageCenter.RemoveEvent(gameObject, Defines.OnSelectEvent, OnSelectCallback);
+        GameApp.MessageCenter.RemoveEvent(Defines.OnUnSelectEvent, OnUnSelectCallback);
     }
 
     public void ShowGrid(Color color)
@@ -49,6 +51,14 @@ public class Block : MonoBehaviour
     private void OnSelectCallback(object arg)
     {
         GameApp.MessageCenter.PostEvent(Defines.OnUnSelectEvent);
+        if (GameApp.CommandManager.isRunningCommand == false)
+        {
+            GameApp.ViewManager.Open(ViewType.FightOptionDesView);
+        }
+    }
+    private void OnUnSelectCallback(object arg)
+    {
+        dirSp.sprite = null;
     }
 
     private void OnMouseEnter()

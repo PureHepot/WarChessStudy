@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -25,8 +26,15 @@ public class ShowPathCommand : BaseCommand
     {
         if (Input.GetMouseButtonDown(0))
         {
-            GameApp.MessageCenter.PostEvent(Defines.OnUnSelectEvent);//执行未选中
-
+            if (prePath.Count != 0 && this.model.Step >= prePath.Count - 1)
+            {
+                GameApp.CommandManager.AddCommand(new MoveCommand(this.model, prePath));//移动
+            }
+            else
+            {
+                GameApp.MessageCenter.PostEvent(Defines.OnUnSelectEvent);
+                GameApp.ViewManager.Open(ViewType.SelectOptionView, this.model.data["Event"], (Vector2)this.model.transform.position);
+            }
             return true;
         }
         current = Tools.ScreenPointToRay2D(Camera.main, Input.mousePosition);//检测当前鼠标位置是否有2d碰撞盒
@@ -72,12 +80,27 @@ public class ShowPathCommand : BaseCommand
             }
         }
 
-        for (int i = 0; i < path.Count; i++)
+        if (path.Count >= 2 && model.Step >= path.Count - 1)
         {
-            BlockDirection dir = BlockDirection.down;
-            GameApp.MapManager.SetBlockDir(path[i].RowIndex, path[i].ColIndex, dir, Color.yellow);
-        }
+            for (int i = 0; i < path.Count; i++)
+            {
+                BlockDirection dir = BlockDirection.none;
 
+                if (i == 0)
+                {
+                    dir = GameApp.MapManager.GetDirection1(path[i], path[i + 1]);
+                }
+                else if(i == path.Count - 1)
+                {
+                    dir = GameApp.MapManager.GetDirection2(path[i], path[i-1]);
+                }
+                else
+                {
+                    dir = GameApp.MapManager.GetDirection3(path[i - 1], path[i], path[i+1]);
+                }
+                GameApp.MapManager.SetBlockDir(path[i].RowIndex, path[i].ColIndex, dir, Color.yellow);
+            }
+        }
         prePath = path;
     }
 }

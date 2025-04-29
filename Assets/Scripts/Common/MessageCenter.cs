@@ -120,7 +120,7 @@ public class MessageCenter
     {
         if (tempMsgDic.ContainsKey(eventName))
         {
-            tempMsgDic[eventName] += callback;
+            tempMsgDic[eventName] = callback;
         }
         else
         {

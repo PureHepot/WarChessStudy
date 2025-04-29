@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -115,6 +116,40 @@ public class _BFS
             finds.Add($"{row}_{col}", p);
             //添加临时集合用于下次查找
             temps.Add(p);
+        }
+    }
+
+    //寻找可移动的点 离终点最近的点的路径集合
+    public List<Point> FindMinPath(ModelBase model, int step, int endRowIndex, int endColIndex)
+    {
+        List<Point> results = Search(model.RowIndex, model.ColIndex, step);
+        if (results.Count == 0)
+        {
+            return null;
+        }
+        else
+        {
+            Point minPoint = results[0];
+            int min_dis = Mathf.Abs(minPoint.RowIndex- endRowIndex)+Mathf.Abs(minPoint.ColIndex-endColIndex);
+            for(int i = 1;i<results.Count;i++)
+            {
+                int temp_dis = Mathf.Abs(results[i].RowIndex - endRowIndex) + Mathf.Abs(results[i].ColIndex - endColIndex);
+                if (temp_dis < min_dis)
+                {
+                    min_dis = temp_dis;
+                    minPoint = results[i];
+                }
+            }
+            List<Point> path = new List<Point>();
+            Point current = minPoint.Father;
+            path.Add(minPoint);
+            while (current != null)
+            {
+                path.Add(current);
+                current = current.Father;
+            }
+            path.Reverse();//反转得到路径
+            return path;
         }
     }
 }

@@ -10,6 +10,7 @@ public class FightPlayerUnit : FightUnitBase
     public override void Init()
     {
         base.Init();
+        GameApp.FightWorldManager.ResetEnemys();
         GameApp.ViewManager.Open(ViewType.TipView, "Íæ¼Ò»ØºÏ");
     }
 }

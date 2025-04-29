@@ -56,7 +56,7 @@ public class BaseView : MonoBehaviour, IBaseView
         Destroy(gameObject);
     }
 
-    public void InitData()
+    public virtual void InitData()
     {
         _isInit = true;
 
